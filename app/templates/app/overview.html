@@ -1,0 +1,34 @@
+<!-- costconsolidation/templates/costconsolidation/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Chart for each cloud provider -->
+    {% for provider, provider_data in grouped_data.items %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="bi bi-bar-chart"></i> {{ provider }}
+            </div>
+            <div class="card-body">
+                <canvas id="{{ provider }}" width="400" height="200"></canvas>
+            </div>
+            <script>
+                
+            </script>
+        </div>
+    {% endfor %}
+
+    <!-- Consolidated view chart -->
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-bar-chart"></i> Consolidated
+        </div>
+        <div class="card-body">
+            <canvas id="consolidatedChart" width="400" height="200"></canvas>
+        </div>
+        <script>
+            // ... (chart script for consolidated view)
+        </script>
+    </div>
+</div>
+{% endblock %}
