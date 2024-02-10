@@ -15,6 +15,7 @@ def overview(request):
     return render(request, 'app/overview.html', {'grouped_data': grouped_data})
 
 def settings(request):
+    existing_providers = CloudCredentials.objects.all()
     if request.method == 'POST':
         form = CloudCredentialsForm(request.POST)
         if form.is_valid():
@@ -22,7 +23,7 @@ def settings(request):
             return redirect('dashboard')
     else:
         form = CloudCredentialsForm()
-    return render(request, 'app/settings.html', {'form': form})
+    return render(request, 'app/settings.html', {'form': form, 'existing_providers': existing_providers})
 
 def fetch_and_store_paginated_cost_data():
     client = boto3.client('ce', region_name='your-aws-region')
