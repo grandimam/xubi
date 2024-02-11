@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import overview, settings
+from .views import overview, connectors
 
 urlpatterns = [
     path('overview/', overview, name='overview'),
-    path('settings/', settings, name='settings'),
+    path('connectors/', connectors, name='connectors'),
 ]
