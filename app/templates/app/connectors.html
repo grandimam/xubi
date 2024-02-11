@@ -1,8 +1,11 @@
+<!-- templates/settings/settings.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <div class="container-fluid">
-    <h2 class="mt-3">Settings</h2>    
+    <h2 class="mt-3">Connectors</h2>
+    
+    <!-- Form to add a new connector -->
     <form method="post">
         {% csrf_token %}
         <div class="mb-3 row">
@@ -23,12 +26,8 @@
                 {{ form.secret_key }}
             </div>
         </div>
-        <div class="mb-3 row">
-            <label for="{{ form.enabled.id_for_label }}" class="col-sm-2 col-form-label">{{ form.enabled.label }}</label>
-            <div class="col-sm-10">
-                <input type="checkbox" name="{{ form.enabled.name }}" {% if form.enabled.value %}checked{% endif %} data-toggle="switch">
-            </div>
-        </div>
+        
+        <!-- Add other form fields as needed -->
         <div class="mb-3 row">
             <div class="col-sm-10 offset-sm-2">
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -36,11 +35,24 @@
         </div>
     </form>
 
-    <h2 class="mt-4">Existing Connectors</h2>
-    <ul>
-        {% for provider in existing_providers %}
-            <li>{{ provider.name }} - Access Key: {{ provider.access_key }}, Secret Key: {{ provider.secret_key }}, Enabled: {{ provider.enabled }}</li>
+    <!-- Section to display existing enabled connectors -->
+    <h2 class="mt-4">Enabled Connectors</h2>
+    <div class="row">
+        {% for connector in existing_connectors %}
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ connector.name }}</h5>
+                        <p class="card-text">Type: {{ connector.type }}</p>
+                        <p class="card-text">Enabled: {{ connector.enabled }}</p>
+                        <p class="card-text">API Key: {{ connector.api_key }}</p>
+                        <p class="card-text">Secret Key: {{ connector.secret_key }}</p>
+                        <!-- Add other information as needed -->
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}
