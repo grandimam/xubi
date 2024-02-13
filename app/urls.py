@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import overview, connectors
+from .views import overview, create_connector, delete_connector
 
 urlpatterns = [
     path('overview/', overview, name='overview'),
-    path('connectors/', connectors, name='connectors'),
+    path('connectors/', create_connector, name='connectors')
 ]

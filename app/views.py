@@ -1,5 +1,5 @@
 import boto3
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from itertools import groupby
 from operator import itemgetter
 from datetime import datetime, timedelta
@@ -14,16 +14,25 @@ def overview(request):
     grouped_data = {key: list(group) for key, group in groupby(sorted(data, key=itemgetter('provider')), key=itemgetter('provider'))}
     return render(request, 'app/overview.html', {'grouped_data': grouped_data})
 
-def connectors(request):
-    existing_providers = CloudCredentials.objects.all()
+def create_connector(request):
     if request.method == 'POST':
         form = CloudCredentialsForm(request.POST)
-        if form.is_valid():
-            r = form.save()
-            return redirect('overview')
+        connector_id_to_delete = request.POST.get('connector_id_to_delete')
+        if connector_id_to_delete:
+            return delete_connector(request, connector_id_to_delete)
+        elif form.is_valid():
+            form.save()
+        return redirect('connectors')
     else:
         form = CloudCredentialsForm()
-    return render(request, 'app/connectors.html', {'form': form, 'existing_providers': existing_providers})
+        existing_providers = CloudCredentials.objects.all()
+        return render(request, 'app/connectors.html', {'form': form, 'existing_connectors': existing_providers})
+
+def delete_connector(request, connector_id):
+    print(connector_id)
+    connector = get_object_or_404(CloudCredentials, pk=connector_id)
+    connector.delete()
+    return redirect("connectors")
 
 def fetch_and_store_paginated_cost_data():
     client = boto3.client('ce', region_name='your-aws-region')
