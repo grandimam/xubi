@@ -1,4 +1,5 @@
 import boto3
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from itertools import groupby
 from operator import itemgetter
@@ -7,12 +8,17 @@ from .forms import CloudCredentialsForm
 from .models import CloudCredentials, CloudCostData
 
 def overview(request):
-    data = [
-        {'provider': 'AWS', 'service': 'EC2', 'cost': 500},
-        {'provider': 'GCP', 'service': 'Compute Engine', 'cost': 400},
-    ]
-    grouped_data = {key: list(group) for key, group in groupby(sorted(data, key=itemgetter('provider')), key=itemgetter('provider'))}
-    return render(request, 'app/overview.html', {'grouped_data': grouped_data})
+    data = CloudCostData.objects.all()
+    return render(request, 'app/overview.html', {'grouped_data': data})
+
+def get_cloud_cost_data(request):
+    labels = ['Label 1', 'Label 2', 'Label 3']
+    values = [100, 200, 150]
+    data = {
+            'labels': labels,
+            'values': values,
+    }
+    return JsonResponse(data)
 
 def create_connector(request):
     if request.method == 'POST':

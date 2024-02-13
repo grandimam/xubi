@@ -3,32 +3,49 @@
 
 {% block content %}
 <div class="container-fluid">
-    <!-- Chart for each cloud provider -->
-    {% for provider, provider_data in grouped_data.items %}
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="bi bi-bar-chart"></i> {{ provider }}
-            </div>
-            <div class="card-body">
-                <canvas id="{{ provider }}" width="400" height="200"></canvas>
-            </div>
-            <script>
-                
-            </script>
+    <h2 class="mt-3">AWS</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="cloudCostChart" width="400" height="400"></canvas>
         </div>
-    {% endfor %}
-
-    <!-- Consolidated view chart -->
-    <div class="card">
-        <div class="card-header">
-            <i class="bi bi-bar-chart"></i> Consolidated
-        </div>
-        <div class="card-body">
-            <canvas id="consolidatedChart" width="400" height="200"></canvas>
-        </div>
-        <script>
-            // ... (chart script for consolidated view)
-        </script>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '{% url "get_cloud_cost_data" %}',  // Replace with your actual API endpoint
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                createChart(data);
+            },
+            error: function() {
+                console.error('Error fetching data.');
+            }
+        });
+        function createChart(data) {
+            var ctx = document.getElementById('cloudCostChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'AWS',
+                        data: data.values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

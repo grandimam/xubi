@@ -48,6 +48,7 @@
                         <p class="card-text">Enabled: {{ connector.enabled }}</p>
                         <p class="card-text">API Key: {{ connector.api_key }}</p>
                         <p class="card-text">Secret Key: {{ connector.secret_key }}</p>
+                        <p class="card-text">Enabled: {{ connector.enabled }}</p>
                         <form method="post" style="display: inline;">
                             {% csrf_token %}
                             <input type="hidden" name="connector_id_to_delete" value="{{ connector.id }}">
