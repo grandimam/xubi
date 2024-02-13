@@ -19,8 +19,8 @@ def connectors(request):
     if request.method == 'POST':
         form = CloudCredentialsForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('dashboard')
+            r = form.save()
+            return redirect('overview')
     else:
         form = CloudCredentialsForm()
     return render(request, 'app/connectors.html', {'form': form, 'existing_providers': existing_providers})

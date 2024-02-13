@@ -26,7 +26,12 @@
                 {{ form.secret_key }}
             </div>
         </div>
-        
+        <div class="mb-3 row">
+            <label for="{{ form.enabled.id_for_label }}" class="col-sm-2 col-form-label">{{ form.enabled.label }}</label>
+            <div class="col-sm-10">
+                <input type="checkbox" name="{{ form.enabled.name }}" {% if form.enabled.value %}checked{% endif %} data-toggle="switch">
+            </div>
+        </div>
         <!-- Add other form fields as needed -->
         <div class="mb-3 row">
             <div class="col-sm-10 offset-sm-2">
