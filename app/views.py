@@ -22,12 +22,14 @@ def get_cloud_cost_data(request):
 
 def create_connector(request):
     if request.method == 'POST':
+        print("form found here")
         form = CloudCredentialsForm(request.POST)
         connector_id_to_delete = request.POST.get('connector_id_to_delete')
         if connector_id_to_delete:
             return delete_connector(request, connector_id_to_delete)
         elif form.is_valid():
             form.save()
+            print(form)
         return redirect('connectors')
     else:
         form = CloudCredentialsForm()

@@ -2,9 +2,11 @@ from django.db import models
 
 class CloudCredentials(models.Model):
     name = models.CharField(max_length=50)
-    access_key = models.CharField(max_length=100)
-    secret_key = models.CharField(max_length=100)
     enabled = models.CharField(max_length=100)
+    aws_access_key = models.CharField(max_length=100)
+    aws_secret_key = models.CharField(max_length=100)
+    gcp_api_key = models.CharField(max_length=100)
+    azure_api_key = models.CharField(max_length=100)
 
 class CloudCostData(models.Model):
     name = models.CharField(max_length=50)
