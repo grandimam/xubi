@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from itertools import groupby
 from operator import itemgetter
 from datetime import datetime, timedelta
-from .forms import CloudCredentialsForm
+from .forms import CloudCredentialsForm, SearchForm
 from .models import CloudCredentials, CloudCostData
 
 def overview(request):
@@ -20,16 +20,22 @@ def get_cloud_cost_data(request):
     }
     return JsonResponse(data)
 
+def search_providers(request):
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if form.is_valid(): 
+            return render(request, )
+    else:
+        form = SearchForm(request.POST)
+
 def create_connector(request):
     if request.method == 'POST':
-        print("form found here")
         form = CloudCredentialsForm(request.POST)
         connector_id_to_delete = request.POST.get('connector_id_to_delete')
         if connector_id_to_delete:
             return delete_connector(request, connector_id_to_delete)
         elif form.is_valid():
             form.save()
-            print(form)
         return redirect('connectors')
     else:
         form = CloudCredentialsForm()
@@ -37,7 +43,6 @@ def create_connector(request):
         return render(request, 'app/connectors.html', {'form': form, 'existing_connectors': existing_providers})
 
 def delete_connector(request, connector_id):
-    print(connector_id)
     connector = get_object_or_404(CloudCredentials, pk=connector_id)
     connector.delete()
     return redirect("connectors")

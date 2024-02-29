@@ -62,13 +62,14 @@
         $('#submitBtn').click(function() {
             let formData = $('#connectorForm').serialize();
             $.ajax({
-                url: '/connectors/',
+                url: 'connectors/',
                 type: 'POST',
                 data: formData,
                 success: function(response) {
                     alert('Form submitted successfully!');
                 },
                 error: function(xhr, status, error) {
+                    console.log("all: ", error);
                     alert('Error submitting form. ' + error);
                 }
             });
