@@ -21,7 +21,7 @@ def get_cloud_cost_data(request):
     return JsonResponse(data)
 
 def search_providers(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid(): 
             return render(request, )
@@ -45,7 +45,7 @@ def create_connector(request):
 def delete_connector(request, connector_id):
     connector = get_object_or_404(CloudCredentials, pk=connector_id)
     connector.delete()
-    return redirect("connectors")
+    return redirect('connectors')
 
 def fetch_and_store_paginated_cost_data():
     client = boto3.client('ce', region_name='your-aws-region')
