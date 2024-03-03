@@ -1,6 +1,6 @@
 from django import forms
 
-from login.models import XuProfile
+from xubi.login.models import XuProfile
 
 
 class LoginForm(forms.ModelForm):

@@ -1,7 +1,7 @@
 from django import forms
 
-from app.models import CloudProvider
-from login.models import XuProfile
+from xubi.app.models import CloudProvider
+from xubi.login.models import XuProfile
 
 
 class CloudProviderForm(forms.ModelForm):

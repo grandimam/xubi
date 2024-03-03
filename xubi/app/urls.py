@@ -1,9 +1,9 @@
 from django.urls import path
 
-from app.views import ConnectorCreateView
-from app.views import ConnectorDeleteView
-from app.views import ConnectorPageFormSuccessView
-from app.views import ConnectorUpdateView
+from xubi.app.views import ConnectorCreateView
+from xubi.app.views import ConnectorDeleteView
+from xubi.app.views import ConnectorPageFormSuccessView
+from xubi.app.views import ConnectorUpdateView
 
 
 urlpatterns = [

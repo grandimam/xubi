@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 
-from app.models import CloudProvider
+from xubi.app.models import CloudProvider
 
 
 class ConnectorCreateView(CreateView):

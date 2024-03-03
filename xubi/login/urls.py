@@ -1,6 +1,6 @@
 from django.urls import path
 
-from login.views import LoginPageView
+from xubi.login.views import LoginPageView
 
 
 urlpatterns = [

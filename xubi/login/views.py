@@ -1,6 +1,6 @@
 from django.views.generic.edit import FormView
 
-from login.forms import LoginForm
+from xubi.login.forms import LoginForm
 
 
 class LoginPageView(FormView):
